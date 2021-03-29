@@ -37,7 +37,12 @@ class BooksApp extends React.Component {
   };
   searchBooks(event) {
     console.log("event", event.target.value);
-    if(event.target.value.length===0) return;
+    if(event.target.value.length===0){
+      this.setState(() => ({
+        searchedBooks: []
+      }))
+      return;
+    } 
     BooksAPI.search(event.target.value)
       .then(data => {
         console.log("Data", data);
