@@ -2,7 +2,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Link, Route } from 'react-router-dom';
-import {BookList} from './BookList';
+import { BookList } from './BookList';
 class BooksApp extends React.Component {
   state = {
     bookList: [],
@@ -20,7 +20,7 @@ class BooksApp extends React.Component {
   }
   getBookData() {
     BooksAPI.getAll().then(data => {
-      console.log("data: ", data);
+      // console.log("data: ", data);
       this.setState(() => ({
         bookList: data
       }))
@@ -28,7 +28,7 @@ class BooksApp extends React.Component {
 
   }
   updateShelf(book, event) {
-    console.log("Shelf", event.target.value);
+    // console.log("Shelf", event.target.value);
     BooksAPI.update(book, event.target.value)
       .then(res => {
         this.getBookData();
@@ -36,25 +36,25 @@ class BooksApp extends React.Component {
       .catch(err => console.log("Err : ", err));
   };
   searchBooks(event) {
-    console.log("event", event.target.value);
-    if(event.target.value.length===0){
+    // console.log("event", event.target.value);
+    if (event.target.value.length === 0) {
       this.setState(() => ({
         searchedBooks: []
       }))
       return;
-    } 
+    }
     BooksAPI.search(event.target.value)
       .then(data => {
-        console.log("Data", data);
+        // console.log("Data", data);
         this.setState(() => ({
           searchedBooks: data
         }))
       })
-      .catch(err=>{
+      .catch(err => {
         this.setState(() => ({
           searchedBooks: []
         }))
-        console.log("err : ",err);
+        console.log("err : ", err);
       });
   }
   render() {
@@ -82,15 +82,15 @@ class BooksApp extends React.Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                {this.state.searchedBooks && this.state.searchedBooks.length>0 && this.state.searchedBooks.filter(searchedBook => searchedBook.imageLinks!==undefined).map(book => {
+                {this.state.searchedBooks && this.state.searchedBooks.length > 0 && this.state.searchedBooks.filter(searchedBook => searchedBook.imageLinks !== undefined).map(book => {
                   return (
                     <BookList
-                     key={book.id}
-                     book = {book}
-                     value ={this.state.bookList.filter(bookData => bookData.id === book.id).map(b => b.shelf).length>0?this.state.bookList.filter(bookData => bookData.id === book.id).map(b => b.shelf)[0]:"none"}
-                     updateShelf={this.updateShelf.bind(this)}
+                      key={book.id}
+                      book={book}
+                      value={this.state.bookList.filter(bookData => bookData.id === book.id).map(b => b.shelf).length > 0 ? this.state.bookList.filter(bookData => bookData.id === book.id).map(b => b.shelf)[0] : "none"}
+                      updateShelf={this.updateShelf.bind(this)}
                     />
-                    )
+                  )
 
                 })}
               </ol>
@@ -111,11 +111,11 @@ class BooksApp extends React.Component {
                       {this.state.bookList.filter(individualBook => individualBook.shelf === "currentlyReading").map((book) => {
                         return (
                           <BookList
-                     key={book.id}
-                     book = {book}
-                     value ="currentlyReading"
-                     updateShelf={this.updateShelf.bind(this)}
-                    />
+                            key={book.id}
+                            book={book}
+                            value="currentlyReading"
+                            updateShelf={this.updateShelf.bind(this)}
+                          />
                         );
                       }
 
@@ -133,11 +133,11 @@ class BooksApp extends React.Component {
                       {this.state.bookList.filter(individualBook => individualBook.shelf === "wantToRead").map((book) => {
                         return (
                           <BookList
-                     key={book.id}
-                     book = {book}
-                     value ="wantToRead"
-                     updateShelf={this.updateShelf.bind(this)}
-                    />
+                            key={book.id}
+                            book={book}
+                            value="wantToRead"
+                            updateShelf={this.updateShelf.bind(this)}
+                          />
                         );
                       }
 
@@ -155,11 +155,11 @@ class BooksApp extends React.Component {
                       {this.state.bookList.filter(individualBook => individualBook.shelf === "read").map((book) => {
                         return (
                           <BookList
-                          key={book.id}
-                          book = {book}
-                          value ="read"
-                          updateShelf={this.updateShelf.bind(this)}
-                         />
+                            key={book.id}
+                            book={book}
+                            value="read"
+                            updateShelf={this.updateShelf.bind(this)}
+                          />
                         );
                       }
 
@@ -173,7 +173,7 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <Link to="/search"><button onClick={() => this.setState({searchedBooks:[]})}>Add a book</button></Link>
+              <Link to="/search"><button onClick={() => this.setState({ searchedBooks: [] })}>Add a book</button></Link>
             </div>
           </div>
         )} />
